@@ -4,50 +4,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code Generator</title>
+    <title>Code Generator - Gerador de Código</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>CodeGen</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Início</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-history"></i>
+                    <span>Histórico</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Configurações</span>
+                </a>
+            </nav>
+        </aside>
 
-    <div class="container">
-        <h1>Code Generator</h1>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <h1>
+                    <i class="fas fa-sparkles"></i>
+                    Gerador de Código Inteligente
+                </h1>
+                <p>Crie código profissional em segundos</p>
+            </header>
 
-        <label>Tipo de Projeto:</label>
-        <select id="tipoProjeto">
-            <option value="site">Site</option>
-            <option value="api">API</option>
-            <option value="app">App Mobile</option>
-        </select>
+            <div class="container">
+                <!-- Seção de Configurações -->
+                <section class="config-section">
+                    <h2>
+                        <i class="fas fa-sliders-h"></i>
+                        Configurações do Projeto
+                    </h2>
 
-        <label>Linguagem:</label>
-        <select id="linguagem">
-            <option value="javascript">JavaScript</option>
-            <option value="python">Python</option>
-            <option value="java">Java</option>
-            <option value="csharp">C#</option>
-            <option value="php">PHP</option>
-            <option value="ruby">Ruby</option>
-            <option value="go">Go</option>
-        </select>
-        <label>
-            <input type="checkbox" id="login"> Sistema de Login
-        </label>
+                    <div class="form-grid">
+                        <!-- Tipo de Projeto -->
+                        <div class="form-group">
+                            <label for="tipoProjeto">
+                                <i class="fas fa-folder"></i>
+                                Tipo de Projeto
+                            </label>
+                            <select id="tipoProjeto">
+                                <option value="site">🌐 Site</option>
+                                <option value="api">⚙️ API</option>
+                                <option value="app">📱 App Mobile</option>
+                            </select>
+                        </div>
 
-        <label>
-            <input type="checkbox" id="banco"> Banco de Dados
-        </label>
+                        <!-- Linguagem -->
+                        <div class="form-group">
+                            <label for="linguagem">
+                                <i class="fas fa-language"></i>
+                                Linguagem de Programação
+                            </label>
+                            <select id="linguagem">
+                                <option value="javascript">JavaScript</option>
+                                <option value="python">Python</option>
+                                <option value="java">Java</option>
+                                <option value="csharp">C#</option>
+                                <option value="php">PHP</option>
+                                <option value="ruby">Ruby</option>
+                                <option value="go">Go</option>
+                            </select>
+                        </div>
+                    </div>
 
-        <label><input type="checkbox" id="crud"> CRUD Completo</label>
-        <label>Descreva o que você quer gerar:</label>
-        <textarea id="promptLivre" placeholder="Ex: API em Node com login e JWT..."></textarea>
-        <button onclick="gerarCodigo()">Gerar Código</button>
+                    <!-- Checkboxes -->
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="login">
+                            <span class="checkbox-label">
+                                <i class="fas fa-lock"></i>
+                                Sistema de Login
+                            </span>
+                        </label>
 
-        <h2>Código Gerado:</h2>
-        <textarea id="resultado" readonly></textarea>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="banco">
+                            <span class="checkbox-label">
+                                <i class="fas fa-database"></i>
+                                Banco de Dados
+                            </span>
+                        </label>
 
-        <button onclick="copiarCodigo()">Copiar</button>
-        <button onclick="baixarCodigo()">Download</button>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="crud">
+                            <span class="checkbox-label">
+                                <i class="fas fa-list"></i>
+                                CRUD Completo
+                            </span>
+                        </label>
+                    </div>
+
+                    <!-- Textarea -->
+                    <div class="form-group full-width">
+                        <label for="promptLivre">
+                            <i class="fas fa-pen-fancy"></i>
+                            Descreva o que você quer gerar
+                        </label>
+                        <textarea 
+                            id="promptLivre" 
+                            placeholder="Ex: API em Node com login e JWT, autenticação com tokens, validação de dados..."
+                            rows="5"
+                        ></textarea>
+                    </div>
+
+                    <!-- Botão Gerar -->
+                    <button class="btn btn-primary" onclick="gerarCodigo()">
+                        <i class="fas fa-magic"></i>
+                        Gerar Código
+                    </button>
+                </section>
+
+                <!-- Seção de Resultado -->
+                <section class="result-section">
+                    <div class="result-header">
+                        <h2>
+                            <i class="fas fa-code"></i>
+                            Código Gerado
+                        </h2>
+                        <div class="result-actions">
+                            <button class="btn btn-secondary" onclick="copiarCodigo()" title="Copiar código">
+                                <i class="fas fa-copy"></i>
+                                Copiar
+                            </button>
+                            <button class="btn btn-secondary" onclick="baixarCodigo()" title="Baixar código">
+                                <i class="fas fa-download"></i>
+                                Download
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="code-wrapper">
+                        <textarea id="resultado" readonly placeholder="O código gerado aparecerá aqui..."></textarea>
+                    </div>
+                </section>
+            </div>
+        </main>
     </div>
 
     <script src="script.js"></script>

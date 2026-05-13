@@ -1,99 +1,459 @@
-/* Adicionado o reset de box-sizing para garantir que o padding não quebre o alinhamento */
+/* ==================== RESET E VARIÁVEIS ==================== */
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
+:root {
+    --primary: #3b82f6;
+    --primary-dark: #2563eb;
+    --primary-light: #60a5fa;
+    --secondary: #8b5cf6;
+    --success: #10b981;
+    --danger: #ef4444;
+    --bg-dark: #0f172a;
+    --bg-card: #1e293b;
+    --bg-input: #0f172a;
+    --border: #334155;
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+}
+
+/* ==================== BODY E LAYOUT ==================== */
 body {
-    font-family: 'Inter', Arial, sans-serif; /* Fonte levemente mais moderna */
-    background: #121212;
-    color: #fff;
+    font-family: 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, var(--bg-dark) 0%, #1a1f3a 100%);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.wrapper {
     display: flex;
-    justify-content: center;
+    min-height: 100vh;
+}
+
+/* ==================== SIDEBAR ==================== */
+.sidebar {
+    width: 260px;
+    background: var(--bg-card);
+    border-right: 1px solid var(--border);
+    padding: 30px 20px;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.logo {
+    display: flex;
     align-items: center;
-    min-height: 100vh; /* Melhor que height para evitar cortes em telas pequenas */
-    margin: 0;
+    gap: 12px;
+    margin-bottom: 40px;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.logo i {
+    font-size: 28px;
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.nav-item:hover {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--primary);
+    transform: translateX(4px);
+}
+
+.nav-item.active {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--primary);
+    border-left: 3px solid var(--primary);
+    padding-left: 13px;
+}
+
+/* ==================== MAIN CONTENT ==================== */
+.main-content {
+    flex: 1;
+    margin-left: 260px;
+    padding: 40px;
+}
+
+.header {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.header p {
+    color: var(--text-muted);
+    font-size: 16px;
 }
 
 .container {
-    background: #1e1e26; /* Cor levemente mais sólida para contraste profissional */
-    padding: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* ==================== SEÇÕES ==================== */
+.config-section,
+.result-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     border-radius: 12px;
-    width: 400px; /* Aumentado um pouco para melhor legibilidade */
-box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); 
-    border: 1px solid rgba(59, 130, 246, 0.3);}
-
-h1, h2 {
-    text-align: center;
-    margin-bottom: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-label {
-    display: block;
-    margin-top: 15px;
-    font-size: 0.9rem;
-    color: #ccc;
+.config-section h2,
+.result-section h2 {
+    font-size: 20px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-primary);
 }
 
-/* Agrupando seletores para garantir que todos tenham exatamente a mesma largura */
-select, button, textarea, #promptLivre {
-    width: 100%;
-    margin-top: 8px;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #444;
-    background: #2b2b36;
-    color: white;
-    font-family: inherit;
+.config-section h2 i,
+.result-section h2 i {
+    color: var(--primary);
 }
 
-button {
-    background: #3b82f6;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-    transition: background 0.2s ease;
+/* ==================== FORM GRID ==================== */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
 }
 
-button:hover {
-    background: #2563eb;
-    box-shadow: 0 0 15px rgba(37, 99, 235, 0.6);
+.form-group {
+    display: flex;
+    flex-direction: column;
 }
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-group label i {
+    color: var(--primary);
+    font-size: 16px;
+}
+
+/* ==================== INPUTS E SELECTS ==================== */
+select,
 textarea {
-    font-size: 13px;
-    margin-top: 15px;
-    height: 220px;
-    background: #0d0d0d;
-    color: #4ade80; /* Um verde terminal mais moderno */
-    font-family: 'Courier New', monospace;
-    resize: none; /* Evita que o usuário quebre o layout puxando a caixa */
-    border: 1px solid #1f2937;
-    /* Efeito de brilho interno para parecer uma tela de terminal */
-    box-shadow: inset 0 0 10px rgba(74, 222, 128, 0.1);
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-input);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 14px;
+    transition: all 0.3s ease;
 }
+
+select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%233b82f6' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+}
+
+select:hover,
+select:focus {
+    border-color: var(--primary);
+    background-color: rgba(59, 130, 246, 0.05);
+}
+
+select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 120px;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    line-height: 1.6;
+}
+
+textarea:hover {
+    border-color: var(--primary);
+}
+
 textarea:focus {
     outline: none;
-    border-color: #4ade80;
-    box-shadow: 0 0 12px rgba(74, 222, 128, 0.3);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    background: rgba(59, 130, 246, 0.02);
 }
 
-/* Ajuste específico para a div de botões lado a lado */
-.buttons {
+/* ==================== CHECKBOXES ==================== */
+.checkbox-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+    padding: 20px;
+    background: rgba(59, 130, 246, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.checkbox-item {
     display: flex;
+    align-items: center;
     gap: 10px;
+    cursor: pointer;
+}
+
+.checkbox-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--primary);
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.checkbox-label i {
+    color: var(--primary);
+}
+
+/* ==================== BOTÕES ==================== */
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
     margin-top: 10px;
 }
 
-.buttons button {
-    margin-top: 0; /* Remove a margem superior dentro do flex para alinhar horizontalmente */
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
 }
 
-#promptLivre:focus, select:focus {
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background: var(--bg-input);
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    width: auto;
+    flex: 1;
+}
+
+.btn-secondary:hover {
+    background: rgba(59, 130, 246, 0.1);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+/* ==================== RESULTADO ==================== */
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.result-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.code-wrapper {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#resultado {
+    width: 100%;
+    min-height: 400px;
+    padding: 16px;
+    background: #0a0e27;
+    color: #10b981;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    border: none;
+    resize: vertical;
+}
+
+#resultado:focus {
     outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
-    height: 45px; /* Altura reduzida */
-    font-size: 14px;
-    resize: none;
-    border: 1px solid #333;
+}
+
+/* ==================== RESPONSIVO ==================== */
+@media (max-width: 1024px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+
+    .checkbox-group {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        left: -260px;
+        height: 100vh;
+        z-index: 1000;
+        transition: left 0.3s ease;
+    }
+
+    .sidebar.active {
+        left: 0;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .checkbox-group {
+        grid-template-columns: 1fr;
+    }
+
+    .result-header {
+        flex-direction: column;
+    }
+
+    .result-actions {
+        width: 100%;
+    }
+
+    .result-actions .btn-secondary {
+        flex: 1;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-content {
+        padding: 15px;
+    }
+
+    .config-section,
+    .result-section {
+        padding: 20px;
+    }
+
+    .header h1 {
+        font-size: 20px;
+    }
+
+    .btn {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+
+    #resultado {
+        min-height: 300px;
+        font-size: 12px;
+    }
+}
+
+/* ==================== SCROLLBAR CUSTOMIZADO ==================== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-card);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
 }

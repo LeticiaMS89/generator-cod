@@ -168,7 +168,7 @@ Livre para usar e modificar.
 
 👨‍💻 Autor
 
-Leticia MS - GitHub
+Leticia MS - https://github.com/LeticiaMS89/generator-cod.git
 
 
 

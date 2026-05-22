@@ -177,7 +177,5 @@ Leticia MS - https://github.com/LeticiaMS89/generator-cod.git
 Sugestões e melhorias são bem-vindas!
 
 
-Pronto! Um README.md direto e objetivo! 📄✨
-
 
 

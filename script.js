@@ -5,7 +5,7 @@ class Notificacao {
         notif.className = `notificacao notificacao-${tipo}`;
         notif.innerHTML = `
             <div class="notif-conteudo">
-                <i class="fas fa-${tipo === 'sucesso' ? 'check-circle' : tipo === 'erro' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <i class="fas fa-${tipo === 'sucesso' ? 'check-circle' : tipo === 'erro' ? 'exclamation-circle' : 'info-circle'}" aria-hidden="true"></i>
                 <span>${mensagem}</span>
             </div>
         `;
@@ -543,9 +543,9 @@ import (
 )
 
 type Item struct {
-    ID        int       \`json:"id"\`
-    Nome      string    \`json:"nome"\`
-    CriadoEm  time.Time \`json:"criadoEm"\`
+    ID       int       \`json:"id"\`
+    Nome     string    \`json:"nome"\`
+    CriadoEm time.Time \`json:"criadoEm"\`
 }
 
 var dados []Item
@@ -920,15 +920,12 @@ if __name__ == '__main__':
 
     // ==================== MÉTODO PRINCIPAL ====================
     gerar(tipo, linguagem, opcoes, promptLivre) {
-        // Se houver prompt livre, processar
         if (promptLivre.trim()) {
             return this.processarPromptLivre(promptLivre, linguagem);
         }
 
-        // Obter template base
         let codigo = this.templates[tipo]?.[linguagem]?.call(this) || '';
 
-        // Adicionar funcionalidades extras
         if (opcoes.login) {
             codigo += this.adicionarLogin(linguagem);
         }
@@ -1176,13 +1173,11 @@ echo json_encode(\$resultado);
             javascript: `\n\n// ==================== CONEXÃO COM BANCO DE DADOS ====================
 const mongoose = require('mongoose');
 
-// Conectar ao MongoDB
 mongoose.connect('mongodb://localhost:27017/meu-banco', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
 
-// Schema de exemplo
 const usuarioSchema = new mongoose.Schema({
     nome: String,
     email: { type: String, unique: true },
@@ -1190,74 +1185,26 @@ const usuarioSchema = new mongoose.Schema({
     criadoEm: { type: Date, default: Date.now }
 });
 
-const Usuario = mongoose.model('Usuario', usuarioSchema);
-
-// Operações CRUD
-async function criarUsuario(nome, email, senha) {
-    const usuario = new Usuario({ nome, email, senha });
-    return await usuario.save();
-}
-
-async function obterUsuarios() {
-    return await Usuario.find();
-}
-
-async function atualizarUsuario(id, dados) {
-    return await Usuario.findByIdAndUpdate(id, dados, { new: true });
-}
-
-async function deletarUsuario(id) {
-    return await Usuario.findByIdAndDelete(id);
-}`,
+const Usuario = mongoose.model('Usuario', usuarioSchema);`,
             python: `\n\n# ==================== CONEXÃO COM BANCO DE DADOS ====================
-from sqlalchemy import create_engine, Column, String, DateTime
+from sqlalchemy import create_engine, Column, String, DateTime, Integer
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 
-# Criar engine
 engine = create_engine('sqlite:///banco.db')
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
 
-# Modelo de exemplo
 class Usuario(Base):
     __tablename__ = 'usuarios'
-    
     id = Column(Integer, primary_key=True)
     nome = Column(String(100))
     email = Column(String(100), unique=True)
     senha = Column(String(255))
     criado_em = Column(DateTime, default=datetime.now)
 
-# Criar tabelas
-Base.metadata.create_all(engine)
-
-# Operações CRUD
-def criar_usuario(nome, email, senha):
-    session = Session()
-    usuario = Usuario(nome=nome, email=email, senha=senha)
-    session.add(usuario)
-    session.commit()
-    return usuario
-
-def obter_usuarios():
-    session = Session()
-    return session.query(Usuario).all()
-
-def atualizar_usuario(id, **kwargs):
-    session = Session()
-    usuario = session.query(Usuario).filter_by(id=id).first()
-    for chave, valor in kwargs.items():
-        setattr(usuario, chave, valor)
-    session.commit()
-    return usuario
-
-def deletar_usuario(id):
-    session = Session()
-    usuario = session.query(Usuario).filter_by(id=id).first()
-    session.delete(usuario)
-    session.commit()`,
+Base.metadata.create_all(engine)`,
             php: `\n\n<?php
 // ==================== CONEXÃO COM BANCO DE DADOS ====================
 class BancoDados {
@@ -1272,52 +1219,12 @@ class BancoDados {
     }
 
     private function conectar() {
-        \$this->conexao = new mysqli(
-            \$this->host,
-            \$this->usuario,
-            \$this->senha,
-            \$this->banco
-        );
-
+        \$this->conexao = new mysqli(\$this->host, \$this->usuario, \$this->senha, \$this->banco);
         if (\$this->conexao->connect_error) {
             die('Erro na conexão: ' . \$this->conexao->connect_error);
         }
     }
-
-    public function criar(\$tabela, \$dados) {
-        \$colunas = implode(', ', array_keys(\$dados));
-        \$valores = "'" . implode("', '", array_values(\$dados)) . "'";
-        
-        \$sql = "INSERT INTO \$tabela (\$colunas) VALUES (\$valores)";
-        return \$this->conexao->query(\$sql);
-    }
-
-    public function obter(\$tabela) {
-        \$sql = "SELECT * FROM \$tabela";
-        \$resultado = \$this->conexao->query(\$sql);
-        return \$resultado->fetch_all(MYSQLI_ASSOC);
-    }
-
-    public function atualizar(\$tabela, \$dados, \$condicao) {
-        \$set = '';
-        foreach (\$dados as \$chave => \$valor) {
-            \$set .= "\$chave = '\$valor', ";
-        }
-        \$set = rtrim(\$set, ', ');
-        
-        \$sql = "UPDATE \$tabela SET \$set WHERE \$condicao";
-        return \$this->conexao->query(\$sql);
-    }
-
-    public function deletar(\$tabela, \$condicao) {
-        \$sql = "DELETE FROM \$tabela WHERE \$condicao";
-        return \$this->conexao->query(\$sql);
-    }
 }
-
-// Uso
-\$db = new BancoDados();
-\$db->criar('usuarios', ['nome' => 'João', 'email' => 'joao@email.com']);
 ?>`,
             default: `\n\n// Conexão com banco de dados`
         };
@@ -1330,75 +1237,171 @@ class BancoDados {
     }
 }
 
-// ==================== FUNÇÕES PRINCIPAIS ====================
-const gerador = new GeradorCodigo();
+// ==================== APLICAÇÃO PRINCIPAL & GERENCIAMENTO DE ESTADO ====================
+document.addEventListener('DOMContentLoaded', () => {
+    const gerador = new GeradorCodigo();
 
-function gerarCodigo() {
-    const tipo = document.getElementById('tipoProjeto').value;
-    const linguagem = document.getElementById('linguagem').value;
-    const promptLivre = document.getElementById('promptLivre').value;
-    const login = document.getElementById('login').checked;
-    const banco = document.getElementById('banco').checked;
-    const crud = document.getElementById('crud').checked;
+    const form = document.getElementById('codeForm');
+    const tipoProjeto = document.getElementById('tipoProjeto');
+    const linguagem = document.getElementById('linguagem');
+    const promptLivre = document.getElementById('promptLivre');
+    const loginCheckbox = document.getElementById('login');
+    const bancoCheckbox = document.getElementById('banco');
+    const crudCheckbox = document.getElementById('crud');
+    const resultadoTextarea = document.getElementById('resultado');
+    const btnCopiar = document.getElementById('btnCopiar');
+    const btnBaixar = document.getElementById('btnBaixar');
+    const btnGerar = document.getElementById('btnGerar');
 
-    const opcoes = { login, banco, crud };
-    const codigo = gerador.gerar(tipo, linguagem, opcoes, promptLivre);
-
-    document.getElementById('resultado').value = codigo;
-
-    Notificacao.mostrar('✅ Código gerado com sucesso!', 'sucesso');
-}
-
-function copiarCodigo() {
-    const textarea = document.getElementById('resultado');
-    
-    if (!textarea.value.trim()) {
-        Notificacao.mostrar('⚠️ Nenhum código para copiar!', 'aviso');
-        return;
-    }
-
-    textarea.select();
-    document.execCommand('copy');
-    Notificacao.mostrar('📋 Código copiado para a área de transferência!', 'sucesso');
-}
-
-function baixarCodigo() {
-    const codigo = document.getElementById('resultado').value;
-    const linguagem = document.getElementById('linguagem').value;
-
-    if (!codigo.trim()) {
-        Notificacao.mostrar('⚠️ Nenhum código para baixar!', 'aviso');
-        return;
-    }
-
-    const extensoes = {
-        javascript: 'js',
-        python: 'py',
-        java: 'java',
-        csharp: 'cs',
-        php: 'php',
-        ruby: 'rb',
-        go: 'go',
+    // Mapeamento dinâmico de linguagens suportadas por tipo de projeto
+    const linguagensPorTipo = {
+        site: [
+            { value: 'javascript', text: 'JavaScript (HTML/CSS/JS)' },
+            { value: 'python', text: 'Python (Flask)' },
+            { value: 'php', text: 'PHP' }
+        ],
+        api: [
+            { value: 'javascript', text: 'JavaScript (Node.js/Express)' },
+            { value: 'python', text: 'Python (Flask)' },
+            { value: 'java', text: 'Java (Spring Boot)' },
+            { value: 'csharp', text: 'C# (.NET)' },
+            { value: 'php', text: 'PHP' },
+            { value: 'go', text: 'Go' },
+            { value: 'ruby', text: 'Ruby (Sinatra)' }
+        ],
+        app: [
+            { value: 'javascript', text: 'React Native' },
+            { value: 'java', text: 'Android (Java)' },
+            { value: 'csharp', text: '.NET MAUI' },
+            { value: 'python', text: 'Python (Kivy)' }
+        ]
     };
 
-    const extensao = extensoes[linguagem] || 'txt';
-    const nomeArquivo = `codigo-gerado.${extensao}`;
+    function atualizarLinguagens() {
+        const tipoSelecionado = tipoProjeto.value;
+        const linguagensPermitidas = linguagensPorTipo[tipoSelecionado] || [];
+        
+        linguagem.innerHTML = '';
+        linguagensPermitidas.forEach(lang => {
+            const option = document.createElement('option');
+            option.value = lang.value;
+            option.textContent = lang.text;
+            linguagem.appendChild(option);
+        });
+    }
 
-    const blob = new Blob([codigo], { type: 'text/plain;charset=utf-8' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = nomeArquivo;
-    link.click();
+    tipoProjeto.addEventListener('change', atualizarLinguagens);
+    atualizarLinguagens(); // Inicializa no carregamento
 
-    Notificacao.mostrar(`📥 Arquivo ${nomeArquivo} baixado!`, 'sucesso');
-}
+    // Ação de Geração com Feedback Visual (Loading State)
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            executarGeracao();
+        });
+    } else if (btnGerar) {
+        btnGerar.addEventListener('click', (e) => {
+            e.preventDefault();
+            executarGeracao();
+        });
+    }
 
-// ==================== EVENT LISTENERS ====================
-document.addEventListener('DOMContentLoaded', () => {
-    // Gerar código ao pressionar Enter na textarea
-    document.getElementById('promptLivre').addEventListener('keydown', (e) => {
-        if (e.ctrlKey && e.key === 'Enter') {
-            gerarCodigo();
+    function executarGeracao() {
+        const tipo = tipoProjeto.value;
+        const lang = linguagem.value;
+        const prompt = promptLivre.value;
+        const opcoes = {
+            login: loginCheckbox ? loginCheckbox.checked : false,
+            banco: bancoCheckbox ? bancoCheckbox.checked : false,
+            crud: crudCheckbox ? crudCheckbox.checked : false
+        };
+
+        // Estado de Carregamento
+        const originalHTML = btnGerar ? btnGerar.innerHTML : '';
+        if (btnGerar) {
+            btnGerar.disabled = true;
+            btnGerar.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Gerando...';
         }
-    });
+
+        setTimeout(() => {
+            try {
+                const codigoGerado = gerador.gerar(tipo, lang, opcoes, prompt);
+                resultadoTextarea.value = codigoGerado;
+                Notificacao.mostrar('✅ Código gerado com sucesso!', 'sucesso');
+            } catch (error) {
+                console.error(error);
+                Notificacao.mostrar('❌ Erro ao gerar o código.', 'erro');
+            } finally {
+                if (btnGerar) {
+                    btnGerar.disabled = false;
+                    btnGerar.innerHTML = originalHTML;
+                }
+            }
+        }, 400);
+    }
+
+    // Copiar Código com Clipboard API Moderna e Tratamento de Erro
+    if (btnCopiar) {
+        btnCopiar.addEventListener('click', async () => {
+            const codigo = resultadoTextarea.value;
+            if (!codigo.trim()) {
+                Notificacao.mostrar('⚠️ Nenhum código para copiar!', 'aviso');
+                return;
+            }
+
+            try {
+                await navigator.clipboard.writeText(codigo);
+                Notificacao.mostrar('📋 Código copiado para a área de transferência!', 'sucesso');
+            } catch (err) {
+                // Fallback legado se clipboard falhar
+                resultadoTextarea.select();
+                document.execCommand('copy');
+                Notificacao.mostrar('📋 Código copiado!', 'sucesso');
+            }
+        });
+    }
+
+    // Baixar Código com Blob
+    if (btnBaixar) {
+        btnBaixar.addEventListener('click', () => {
+            const codigo = resultadoTextarea.value;
+            const lang = linguagem.value;
+
+            if (!codigo.trim()) {
+                Notificacao.mostrar('⚠️ Nenhum código para baixar!', 'aviso');
+                return;
+            }
+
+            const extensoes = {
+                javascript: 'js',
+                python: 'py',
+                java: 'java',
+                csharp: 'cs',
+                php: 'php',
+                ruby: 'rb',
+                go: 'go',
+            };
+
+            const extensao = extensoes[lang] || 'txt';
+            const nomeArquivo = `codigo-gerado.${extensao}`;
+
+            const blob = new Blob([codigo], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = nomeArquivo;
+            link.click();
+            URL.revokeObjectURL(link.href);
+
+            Notificacao.mostrar(`📥 Arquivo ${nomeArquivo} baixado com sucesso!`, 'sucesso');
+        });
+    }
+
+    // Atalho de Teclado (Ctrl + Enter) para gerar
+    if (promptLivre) {
+        promptLivre.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'Enter') {
+                executarGeracao();
+            }
+        });
+    }
 });

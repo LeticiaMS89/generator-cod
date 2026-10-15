@@ -1,33 +1,32 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code Generator - Gerador de Código</title>
+    <meta name="description" content="CodeGen - Gerador de código inteligente e profissional em segundos.">
+    <title>CodeGen — Gerador de Código Inteligente</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-
 <body>
     <div class="wrapper">
         <!-- Sidebar -->
-        <aside class="sidebar">
+        <aside class="sidebar" aria-label="Menu Lateral">
             <div class="logo">
-                <i class="fas fa-code"></i>
+                <i class="fas fa-code" aria-hidden="true"></i>
                 <span>CodeGen</span>
             </div>
-            <nav class="nav-menu">
-                <a href="#" class="nav-item active">
-                    <i class="fas fa-home"></i>
+            <nav class="nav-menu" aria-label="Navegação Principal">
+                <a href="#" class="nav-item active" aria-current="page">
+                    <i class="fas fa-home" aria-hidden="true"></i>
                     <span>Início</span>
                 </a>
                 <a href="#" class="nav-item">
-                    <i class="fas fa-history"></i>
+                    <i class="fas fa-history" aria-hidden="true"></i>
                     <span>Histórico</span>
                 </a>
                 <a href="#" class="nav-item">
-                    <i class="fas fa-cog"></i>
+                    <i class="fas fa-cog" aria-hidden="true"></i>
                     <span>Configurações</span>
                 </a>
             </nav>
@@ -38,7 +37,7 @@
             <!-- Header -->
             <header class="header">
                 <h1>
-                    <i class="fas fa-sparkles"></i>
+                    <i class="fas fa-sparkles" aria-hidden="true"></i>
                     Gerador de Código Inteligente
                 </h1>
                 <p>Crie código profissional em segundos</p>
@@ -46,119 +45,122 @@
 
             <div class="container">
                 <!-- Seção de Configurações -->
-                <section class="config-section">
-                    <h2>
-                        <i class="fas fa-sliders-h"></i>
+                <section class="config-section" aria-labelledby="config-title">
+                    <h2 id="config-title">
+                        <i class="fas fa-sliders-h" aria-hidden="true"></i>
                         Configurações do Projeto
                     </h2>
 
-                    <div class="form-grid">
-                        <!-- Tipo de Projeto -->
-                        <div class="form-group">
-                            <label for="tipoProjeto">
-                                <i class="fas fa-folder"></i>
-                                Tipo de Projeto
-                            </label>
-                            <select id="tipoProjeto">
-                                <option value="site">🌐 Site</option>
-                                <option value="api">⚙️ API</option>
-                                <option value="app">📱 App Mobile</option>
-                            </select>
+                    <form id="codeForm" novalidate>
+                        <div class="form-grid">
+                            <!-- Tipo de Projeto -->
+                            <div class="form-group">
+                                <label for="tipoProjeto">
+                                    <i class="fas fa-folder" aria-hidden="true"></i>
+                                    Tipo de Projeto
+                                </label>
+                                <select id="tipoProjeto" name="tipoProjeto" required>
+                                    <option value="site">🌐 Site</option>
+                                    <option value="api">⚙️ API</option>
+                                    <option value="app">📱 App Mobile</option>
+                                </select>
+                            </div>
+
+                            <!-- Linguagem -->
+                            <div class="form-group">
+                                <label for="linguagem">
+                                    <i class="fas fa-language" aria-hidden="true"></i>
+                                    Linguagem de Programação
+                                </label>
+                                <select id="linguagem" name="linguagem" required>
+                                    <option value="javascript">JavaScript</option>
+                                    <option value="python">Python</option>
+                                    <option value="java">Java</option>
+                                    <option value="csharp">C#</option>
+                                    <option value="php">PHP</option>
+                                    <option value="ruby">Ruby</option>
+                                    <option value="go">Go</option>
+                                </select>
+                            </div>
                         </div>
 
-                        <!-- Linguagem -->
-                        <div class="form-group">
-                            <label for="linguagem">
-                                <i class="fas fa-language"></i>
-                                Linguagem de Programação
+                        <!-- Checkboxes -->
+                        <div class="checkbox-group" role="group" aria-label="Opções adicionais">
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="login" name="login">
+                                <span class="checkbox-label">
+                                    <i class="fas fa-lock" aria-hidden="true"></i>
+                                    Sistema de Login
+                                </span>
                             </label>
-                            <select id="linguagem">
-                                <option value="javascript">JavaScript</option>
-                                <option value="python">Python</option>
-                                <option value="java">Java</option>
-                                <option value="csharp">C#</option>
-                                <option value="php">PHP</option>
-                                <option value="ruby">Ruby</option>
-                                <option value="go">Go</option>
-                            </select>
+
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="banco" name="banco">
+                                <span class="checkbox-label">
+                                    <i class="fas fa-database" aria-hidden="true"></i>
+                                    Banco de Dados
+                                </span>
+                            </label>
+
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="crud" name="crud">
+                                <span class="checkbox-label">
+                                    <i class="fas fa-list" aria-hidden="true"></i>
+                                    CRUD Completo
+                                </span>
+                            </label>
                         </div>
-                    </div>
 
-                    <!-- Checkboxes -->
-                    <div class="checkbox-group">
-                        <label class="checkbox-item">
-                            <input type="checkbox" id="login">
-                            <span class="checkbox-label">
-                                <i class="fas fa-lock"></i>
-                                Sistema de Login
-                            </span>
-                        </label>
+                        <!-- Textarea -->
+                        <div class="form-group full-width">
+                            <label for="promptLivre">
+                                <i class="fas fa-pen-fancy" aria-hidden="true"></i>
+                                Descreva o que você quer gerar
+                            </label>
+                            <textarea 
+                                id="promptLivre" 
+                                name="promptLivre"
+                                placeholder="Ex: API em Node com login e JWT, autenticação com tokens, validação de dados..."
+                                rows="5"
+                            ></textarea>
+                        </div>
 
-                        <label class="checkbox-item">
-                            <input type="checkbox" id="banco">
-                            <span class="checkbox-label">
-                                <i class="fas fa-database"></i>
-                                Banco de Dados
-                            </span>
-                        </label>
-
-                        <label class="checkbox-item">
-                            <input type="checkbox" id="crud">
-                            <span class="checkbox-label">
-                                <i class="fas fa-list"></i>
-                                CRUD Completo
-                            </span>
-                        </label>
-                    </div>
-
-                    <!-- Textarea -->
-                    <div class="form-group full-width">
-                        <label for="promptLivre">
-                            <i class="fas fa-pen-fancy"></i>
-                            Descreva o que você quer gerar
-                        </label>
-                        <textarea 
-                            id="promptLivre" 
-                            placeholder="Ex: API em Node com login e JWT, autenticação com tokens, validação de dados..."
-                            rows="5"
-                        ></textarea>
-                    </div>
-
-                    <!-- Botão Gerar -->
-                    <button class="btn btn-primary" onclick="gerarCodigo()">
-                        <i class="fas fa-magic"></i>
-                        Gerar Código
-                    </button>
+                        <!-- Botão Gerar -->
+                        <button type="submit" id="btnGerar" class="btn btn-primary">
+                            <i class="fas fa-magic" aria-hidden="true"></i>
+                            <span>Gerar Código</span>
+                        </button>
+                    </form>
                 </section>
 
                 <!-- Seção de Resultado -->
-                <section class="result-section">
+                <section class="result-section" aria-labelledby="result-title">
                     <div class="result-header">
-                        <h2>
-                            <i class="fas fa-code"></i>
+                        <h2 id="result-title">
+                            <i class="fas fa-code" aria-hidden="true"></i>
                             Código Gerado
                         </h2>
                         <div class="result-actions">
-                            <button class="btn btn-secondary" onclick="copiarCodigo()" title="Copiar código">
-                                <i class="fas fa-copy"></i>
+                            <button type="button" id="btnCopiar" class="btn btn-secondary" title="Copiar código">
+                                <i class="fas fa-copy" aria-hidden="true"></i>
                                 Copiar
                             </button>
-                            <button class="btn btn-secondary" onclick="baixarCodigo()" title="Baixar código">
-                                <i class="fas fa-download"></i>
+                            <button type="button" id="btnBaixar" class="btn btn-secondary" title="Baixar código">
+                                <i class="fas fa-download" aria-hidden="true"></i>
                                 Download
                             </button>
                         </div>
                     </div>
 
                     <div class="code-wrapper">
-                        <textarea id="resultado" readonly placeholder="O código gerado aparecerá aqui..."></textarea>
+                        <textarea id="resultado" readonly placeholder="O código gerado aparecerá aqui..." aria-label="Área de exibição do código gerado"></textarea>
                     </div>
                 </section>
             </div>
         </main>
     </div>
 
+    <!-- Script modularizado -->
     <script src="script.js"></script>
 </body>
-
 </html>

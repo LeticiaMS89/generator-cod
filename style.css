@@ -19,6 +19,7 @@
     --text-primary: #f1f5f9;
     --text-secondary: #cbd5e1;
     --text-muted: #94a3b8;
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ==================== BODY E LAYOUT ==================== */
@@ -28,6 +29,7 @@ body {
     color: var(--text-primary);
     min-height: 100vh;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
 }
 
 .wrapper {
@@ -42,9 +44,12 @@ body {
     border-right: 1px solid var(--border);
     padding: 30px 20px;
     position: fixed;
+    top: 0;
+    left: 0;
     height: 100vh;
     overflow-y: auto;
     box-shadow: 2px 0 15px rgba(0, 0, 0, 0.3);
+    z-index: 100;
 }
 
 .logo {
@@ -75,7 +80,7 @@ body {
     border-radius: 8px;
     color: var(--text-secondary);
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: var(--transition-smooth);
     cursor: pointer;
 }
 
@@ -111,7 +116,7 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
@@ -197,7 +202,8 @@ textarea {
     color: var(--text-primary);
     font-family: inherit;
     font-size: 14px;
-    transition: all 0.3s ease;
+    transition: var(--transition-smooth);
+    width: 100%;
 }
 
 select {
@@ -215,9 +221,12 @@ select:focus {
     background-color: rgba(59, 130, 246, 0.05);
 }
 
-select:focus {
+select:focus,
+textarea:focus,
+input:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
 
 textarea {
@@ -231,17 +240,10 @@ textarea:hover {
     border-color: var(--primary);
 }
 
-textarea:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    background: rgba(59, 130, 246, 0.02);
-}
-
 /* ==================== CHECKBOXES ==================== */
 .checkbox-group {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 15px;
     margin-bottom: 25px;
     padding: 20px;
@@ -285,7 +287,7 @@ textarea:focus {
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--transition-smooth);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -373,10 +375,7 @@ textarea:focus {
 
 @media (max-width: 768px) {
     .sidebar {
-        position: fixed;
         left: -260px;
-        height: 100vh;
-        z-index: 1000;
         transition: left 0.3s ease;
     }
 
@@ -403,6 +402,7 @@ textarea:focus {
 
     .result-header {
         flex-direction: column;
+        align-items: stretch;
     }
 
     .result-actions {
